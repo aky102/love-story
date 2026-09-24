@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Create Our Love Story ❤️</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="creator-page">
+<main class="creator-card">
+  <div class="sparkle">✦</div>
+  <h1>Our Love Story ❤️</h1>
+  <p>Create a private little romantic journey and get a shareable link.</p>
+  <form id="loveForm">
+    <label>Your name</label>
+    <input id="yourName" required maxlength="40" placeholder="Your name">
+
+    <label>Your love's name</label>
+    <input id="loveName" required maxlength="40" placeholder="Their name">
+
+    <label>Our story started on</label>
+    <input id="startDate" type="date" required>
+
+    <label>Your love message</label>
+    <textarea id="mainMessage" required maxlength="1200" placeholder="Write from your heart..."></textarea>
+
+    <label>Reason 1</label><input id="reason1" required maxlength="180" placeholder="Your smile...">
+    <label>Reason 2</label><input id="reason2" maxlength="180" placeholder="The way you care...">
+    <label>Reason 3</label><input id="reason3" maxlength="180" placeholder="Simply you...">
+
+    <label>Final message</label>
+    <textarea id="finalMessage" required maxlength="1000" placeholder="Your final surprise message..."></textarea>
+
+    <label>Memories ❤️</label>
+    <input id="photos" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple>
+    <p class="small">You can select several photos. They will appear as a simple photo-only memory section.</p>
+
+    <button class="primary" type="submit" id="createBtn">Create My Love Link ❤️</button>
+  </form>
+  <div id="status"></div>
+  <div id="result" class="result hidden">
+    <p>Your love story is ready ❤️</p>
+    <input id="shareLink" readonly>
+    <button class="primary" id="copyBtn">Copy Link 🔗</button>
+    <a id="openLink" class="secondary" target="_blank" rel="noopener">Open Story</a>
+  </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="creator.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Our Story ❤️</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="story-page">
+<div id="hearts"></div>
+<main id="app">
+<section class="scene active">
+<p>A little story about two people...</p>
+<h1><span id="yourName"></span> ❤️ <span id="loveName"></span></h1>
+<p>Some stories are written by chance. Ours is written by the heart.</p>
+<button class="primary next">Begin ❤️</button>
+</section>
+
+<section class="scene">
+<div class="big">❤️</div>
+<h2>Our Story Began</h2>
+<p id="dateText"></p>
+<div class="counter" id="counter"></div>
+<p>And every day became another little memory.</p>
+<button class="primary next">Continue →</button>
+</section>
+
+<section class="scene">
+<div class="envelope">💌</div>
+<h2>You Have A Letter</h2>
+<p>Someone wrote this especially for you.</p>
+<button class="primary" id="openLetter">Open My Heart 💌</button>
+<div class="message hidden" id="mainMessage"></div>
+<button class="secondary next hidden" id="letterNext">Continue ❤️</button>
+</section>
+
+<section class="scene">
+<h2>Find The Hidden Heart</h2>
+<p>Tap a flower to find it.</p>
+<div class="flowers">
+<button>🌸</button><button>🌷</button><button>🌺</button>
+<button>🌼</button><button class="target">❤️</button><button>🌹</button>
+</div>
+<p id="gameResult"></p>
+<button class="secondary next hidden" id="gameNext">Continue →</button>
+</section>
+
+<section class="scene">
+<div class="rose" id="rose">🌹</div>
+<h2>Touch The Rose</h2>
+<p>There is a little secret inside.</p>
+<div class="message hidden" id="roseMessage"></div>
+<button class="primary" id="touchRose">Touch The Rose 🌹</button>
+<button class="secondary next hidden" id="roseNext">Continue →</button>
+</section>
+
+<section class="scene">
+<h2>Our Memories ❤️</h2>
+<div class="memory-view" id="memories"></div>
+<button class="primary next">Continue ❤️</button>
+</section>
+
+<section class="scene">
+<h2>Why I Love You 💕</h2>
+<div class="reason"><span>01</span><p id="r1"></p></div>
+<div class="reason"><span>02</span><p id="r2"></p></div>
+<div class="reason"><span>03</span><p id="r3"></p></div>
+<button class="primary next">One Last Thing 💌</button>
+</section>
+
+<section class="scene final-scene">
+<h2>One Last Thing...</h2>
+<div class="final" id="finalMessage"></div>
+<div class="big">❤️</div>
+<p><span id="signName"></span> → <span id="signLove"></span></p>
+<button class="secondary" onclick="location.reload()">Replay ↻</button>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="story.js"></script>
+</body>
+</html>
