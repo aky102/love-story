@@ -10,266 +10,489 @@
     content="width=device-width,initial-scale=1"
   >
 
-  <title>Our Story ❤️</title>
+  <title>Our Love Story ❤️</title>
 
-  <!-- IMPORTANT: absolute path -->
   <link rel="stylesheet" href="/style.css">
 
 </head>
 
+
 <body class="story-page">
 
-<div id="hearts"></div>
-
-<main id="app">
-
-  <!-- SCENE 1 -->
-
-  <section class="scene active">
-
-    <p>A little story about two people...</p>
-
-    <h1>
-      <span id="yourName"></span>
-      ❤️
-      <span id="loveName"></span>
-    </h1>
-
-    <p>
-      Some stories are written by chance.
-      Ours is written by the heart.
-    </p>
-
-    <button class="primary next">
-      Begin ❤️
-    </button>
-
-  </section>
+  <!-- Floating hearts -->
+  <div id="hearts"></div>
 
 
-  <!-- SCENE 2 -->
+  <!-- Background music -->
 
-  <section class="scene">
+  <audio
+    id="bgMusic"
+    loop
+    preload="auto"
+  >
 
-    <div class="big">❤️</div>
-
-    <h2>Our Story Began</h2>
-
-    <p id="dateText"></p>
-
-    <div
-      class="counter"
-      id="counter"
-    ></div>
-
-    <p>
-      And every day became another little memory.
-    </p>
-
-    <button class="primary next">
-      Continue →
-    </button>
-
-  </section>
-
-
-  <!-- SCENE 3 -->
-
-  <section class="scene">
-
-    <div class="envelope">
-      💌
-    </div>
-
-    <h2>You Have A Letter</h2>
-
-    <p>
-      Someone wrote this especially for you.
-    </p>
-
-    <button
-      class="primary"
-      id="openLetter"
+    <source
+      src="/music.mp3"
+      type="audio/mpeg"
     >
-      Open My Heart 💌
-    </button>
 
-    <div
-      class="message hidden"
-      id="mainMessage"
-    ></div>
-
-    <button
-      class="secondary next hidden"
-      id="letterNext"
-    >
-      Continue ❤️
-    </button>
-
-  </section>
+  </audio>
 
 
-  <!-- SCENE 4 -->
+  <!-- Music button -->
 
-  <section class="scene">
+  <button
+    id="musicToggle"
+    class="music-toggle"
+    aria-label="Toggle music"
+  >
+    ♫
+  </button>
 
-    <h2>Find The Hidden Heart</h2>
+  <div
+    id="musicHint"
+    class="music-hint"
+  >
+    Tap ♫ for music
+  </div>
 
-    <p>
-      Tap a flower to find it.
-    </p>
 
-    <div class="flowers">
+  <main id="app">
 
-      <button>🌸</button>
-      <button>🌷</button>
-      <button>🌺</button>
 
-      <button>🌼</button>
+    <!-- ========================= -->
+    <!-- SCENE 1 -->
+    <!-- ========================= -->
 
-      <button class="target">
-        ❤️
+    <section class="scene active">
+
+      <div class="eyebrow">
+        A little story made with love
+      </div>
+
+      <div class="hero-heart">
+        ♡
+      </div>
+
+      <p>For</p>
+
+      <h1>
+
+        <span id="yourName"></span>
+
+        <span class="love-symbol">
+          ♥
+        </span>
+
+        <span id="loveName"></span>
+
+      </h1>
+
+      <p class="lead">
+        Some stories are written by chance.
+        Ours is written by the heart.
+      </p>
+
+      <button
+        class="primary next"
+        id="beginBtn"
+      >
+        Begin Our Story ♥
       </button>
 
-      <button>🌹</button>
-
-    </div>
-
-    <p id="gameResult"></p>
-
-    <button
-      class="secondary next hidden"
-      id="gameNext"
-    >
-      Continue →
-    </button>
-
-  </section>
+    </section>
 
 
-  <!-- SCENE 5 -->
+    <!-- ========================= -->
+    <!-- SCENE 2 -->
+    <!-- ========================= -->
 
-  <section class="scene">
+    <section class="scene">
 
-    <div
-      class="rose"
-      id="rose"
-    >
-      🌹
-    </div>
+      <div class="eyebrow">
+        Chapter One
+      </div>
 
-    <h2>Touch The Rose</h2>
+      <div class="big">
+        ♥
+      </div>
 
-    <p>
-      There is a little secret inside.
-    </p>
+      <h2>
+        Our Story Began
+      </h2>
 
-    <div
-      class="message hidden"
-      id="roseMessage"
-    ></div>
+      <p id="dateText"></p>
 
-    <button
-      class="primary"
-      id="touchRose"
-    >
-      Touch The Rose 🌹
-    </button>
+      <div
+        class="counter"
+        id="counter"
+      ></div>
 
-    <button
-      class="secondary next hidden"
-      id="roseNext"
-    >
-      Continue →
-    </button>
+      <p class="soft">
+        Every day since then became
+        another little memory.
+      </p>
 
-  </section>
+      <button class="primary next">
+        Continue →
+      </button>
+
+    </section>
 
 
-  <!-- SCENE 6 -->
+    <!-- ========================= -->
+    <!-- SCENE 3 -->
+    <!-- ========================= -->
 
-  <section class="scene">
+    <section class="scene">
 
-    <h2>Our Memories ❤️</h2>
+      <div class="eyebrow">
+        A letter from the heart
+      </div>
 
-    <div
-      class="memory-view"
-      id="memories"
-    ></div>
+      <div class="envelope">
+        💌
+      </div>
 
-    <button class="primary next">
-      Continue ❤️
-    </button>
+      <h2>
+        You Have A Letter
+      </h2>
 
-  </section>
+      <p class="soft">
+        Someone wrote this especially for you.
+      </p>
 
+      <button
+        class="primary"
+        id="openLetter"
+      >
+        Open My Heart 💌
+      </button>
 
-  <!-- SCENE 7 -->
+      <div
+        class="message hidden"
+        id="mainMessage"
+      ></div>
 
-  <section class="scene">
+      <button
+        class="secondary next hidden"
+        id="letterNext"
+      >
+        Continue ♥
+      </button>
 
-    <h2>Why I Love You 💕</h2>
-
-    <div class="reason">
-      <span>01</span>
-      <p id="r1"></p>
-    </div>
-
-    <div class="reason">
-      <span>02</span>
-      <p id="r2"></p>
-    </div>
-
-    <div class="reason">
-      <span>03</span>
-      <p id="r3"></p>
-    </div>
-
-    <button class="primary next">
-      One Last Thing 💌
-    </button>
-
-  </section>
+    </section>
 
 
-  <!-- FINAL SCENE -->
+    <!-- ========================= -->
+    <!-- SCENE 4 -->
+    <!-- ========================= -->
 
-  <section class="scene final-scene">
+    <section class="scene">
 
-    <h2>One Last Thing...</h2>
+      <div class="eyebrow">
+        A tiny game
+      </div>
 
-    <div
-      class="final"
-      id="finalMessage"
-    ></div>
+      <h2>
+        Find The Hidden Heart
+      </h2>
 
-    <div class="big">
-      ❤️
-    </div>
+      <p class="soft">
+        Only one heart belongs to your love.
+      </p>
 
-    <p>
-      <span id="signName"></span>
-      →
-      <span id="signLove"></span>
-    </p>
+      <div class="flowers">
 
-    <button
-      class="secondary"
-      onclick="location.reload()"
-    >
-      Replay ↻
-    </button>
+        <button>🌸</button>
 
-  </section>
+        <button>🌷</button>
 
-</main>
+        <button>🌺</button>
+
+        <button>🌼</button>
+
+        <button class="target">
+          ❤️
+        </button>
+
+        <button>🌹</button>
+
+      </div>
+
+      <p
+        id="gameResult"
+        class="game-result"
+      ></p>
+
+      <button
+        class="secondary next hidden"
+        id="gameNext"
+      >
+        I found it →
+      </button>
+
+    </section>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- ========================= -->
+    <!-- SCENE 5 -->
+    <!-- ========================= -->
 
-<!-- IMPORTANT: absolute paths -->
-<script src="/config.js"></script>
-<script src="/story.js"></script>
+    <section class="scene">
+
+      <div class="eyebrow">
+        A rose for you
+      </div>
+
+      <div
+        class="rose"
+        id="rose"
+      >
+        🌹
+      </div>
+
+      <h2>
+        Touch The Rose
+      </h2>
+
+      <p class="soft">
+        There is a little secret inside.
+      </p>
+
+      <div
+        class="message hidden"
+        id="roseMessage"
+      ></div>
+
+      <button
+        class="primary"
+        id="touchRose"
+      >
+        Touch The Rose 🌹
+      </button>
+
+      <button
+        class="secondary next hidden"
+        id="roseNext"
+      >
+        Continue →
+      </button>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- SCENE 6 -->
+    <!-- MEMORIES -->
+    <!-- ========================= -->
+
+    <section class="scene memory-scene">
+
+      <div class="eyebrow">
+        Our favorite moments
+      </div>
+
+      <h2>
+        Memories ♥
+      </h2>
+
+      <p class="soft">
+        Every picture holds a little piece of us.
+      </p>
+
+
+      <div class="collage-wrap">
+
+        <div
+          class="collage romantic"
+          id="memories"
+        ></div>
+
+      </div>
+
+
+      <!-- Collage themes -->
+
+      <div class="theme-switcher">
+
+        <button
+          class="theme-btn active"
+          data-theme="romantic"
+        >
+          Romantic
+        </button>
+
+        <button
+          class="theme-btn"
+          data-theme="polaroid"
+        >
+          Polaroid
+        </button>
+
+        <button
+          class="theme-btn"
+          data-theme="film"
+        >
+          Film
+        </button>
+
+        <button
+          class="theme-btn"
+          data-theme="dreamy"
+        >
+          Dreamy
+        </button>
+
+      </div>
+
+
+      <button class="primary next">
+        Continue ♥
+      </button>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- SCENE 7 -->
+    <!-- ========================= -->
+
+    <section class="scene">
+
+      <div class="eyebrow">
+        The little things
+      </div>
+
+      <h2>
+        Why I Love You
+      </h2>
+
+
+      <div class="reason">
+
+        <span>
+          01
+        </span>
+
+        <p id="r1"></p>
+
+      </div>
+
+
+      <div class="reason">
+
+        <span>
+          02
+        </span>
+
+        <p id="r2"></p>
+
+      </div>
+
+
+      <div class="reason">
+
+        <span>
+          03
+        </span>
+
+        <p id="r3"></p>
+
+      </div>
+
+
+      <button class="primary next">
+        One Last Thing 💌
+      </button>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- FINAL SCENE -->
+    <!-- ========================= -->
+
+    <section class="scene final-scene">
+
+      <div class="eyebrow">
+        Forever starts with today
+      </div>
+
+      <div class="big final-heart">
+        ♥
+      </div>
+
+      <h2>
+        One Last Thing...
+      </h2>
+
+
+      <div
+        class="final"
+        id="finalMessage"
+      ></div>
+
+
+      <p class="signature">
+
+        With all my love,
+
+        <br>
+
+        <span id="signName"></span>
+
+        <span class="love-symbol">
+          ♥
+        </span>
+
+        <span id="signLove"></span>
+
+      </p>
+
+
+      <div class="final-actions">
+
+        <button
+          class="secondary"
+          id="replayBtn"
+        >
+          Replay ↻
+        </button>
+
+
+        <a
+          class="primary create-link"
+          href="/"
+          target="_blank"
+          rel="noopener"
+        >
+          Create Your Own Love Story ♥
+        </a>
+
+      </div>
+
+
+      <p class="tiny">
+        Make your own story and share it
+        with someone special.
+      </p>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- Supabase -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="/config.js"></script>
+
+  <script src="/story.js"></script>
+
 
 </body>
+
 </html>
