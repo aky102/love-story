@@ -1,112 +1,869 @@
 const { createClient } = supabase;
-const db = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
-const id = location.pathname.split("/").filter(Boolean).pop() || new URLSearchParams(location.search).get("id");
 
-function setText(id, value) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = value ?? "";
+const db = createClient(
+  window.SUPABASE_URL,
+  window.SUPABASE_ANON_KEY
+);
+
+
+const id =
+  location.pathname
+    .split("/")
+    .filter(Boolean)
+    .pop()
+  ||
+  new URLSearchParams(location.search)
+    .get("id");
+
+
+
+/* ========================= */
+/* BASIC FUNCTIONS */
+/* ========================= */
+
+function setText(
+  elementId,
+  value
+) {
+
+  const el =
+    document.getElementById(
+      elementId
+    );
+
+  if (el) {
+
+    el.textContent =
+      value ?? "";
+
+  }
+
 }
+
+
+
 function showError(message) {
-  document.getElementById("app").innerHTML =
-    `<section class="scene active"><h2>❤️</h2><p>${message}</p></section>`;
+
+  document.getElementById("app").innerHTML = `
+
+    <section class="scene active">
+
+      <div class="big">
+        💔
+      </div>
+
+      <h2>
+        Oops...
+      </h2>
+
+      <p>
+        ${message}
+      </p>
+
+      <a
+        class="primary"
+        href="/"
+      >
+        Create a Love Story
+      </a>
+
+    </section>
+
+  `;
+
 }
 
-async function loadStory() {
-  if (!id || id === "story.html") return showError("This love story link is incomplete.");
+
+
+/* ========================= */
+/* MUSIC */
+/* ========================= */
+
+const music =
+  document.getElementById(
+    "bgMusic"
+  );
+
+const musicToggle =
+  document.getElementById(
+    "musicToggle"
+  );
+
+const musicHint =
+  document.getElementById(
+    "musicHint"
+  );
+
+
+let musicPlaying = false;
+
+
+
+async function startMusic() {
+
   try {
-    const { data: story, error } = await db.from("love_stories")
-      .select("*").eq("id", id).single();
-    if (error) throw error;
 
-    setText("yourName", story.your_name);
-    setText("loveName", story.love_name);
-    setText("mainMessage", story.main_message);
-    setText("r1", story.reason1);
-    setText("r2", story.reason2);
-    setText("r3", story.reason3);
-    setText("finalMessage", story.final_message);
-    setText("signName", story.your_name);
-    setText("signLove", story.love_name);
+    music.volume = 0.35;
 
-    const start = new Date(story.start_date + "T00:00:00");
-    setText("dateText", start.toLocaleDateString(undefined,{day:"numeric",month:"long",year:"numeric"}));
-    const updateCounter = () => {
-      const days = Math.max(0, Math.floor((Date.now() - start.getTime()) / 86400000));
-      setText("counter", `${days.toLocaleString()} Days Together ❤️`);
-    };
-    updateCounter(); setInterval(updateCounter,60000);
+    await music.play();
 
-    const { data: photos, error: photoError } = await db.from("love_photos")
-      .select("storage_path,sort_order").eq("story_id",id).order("sort_order");
-    if (photoError) throw photoError;
+    musicPlaying = true;
 
-    const memoryBox = document.getElementById("memories");
-    if (photos?.length) {
-      for (const p of photos) {
-        const { data } = db.storage.from(window.SUPABASE_BUCKET).getPublicUrl(p.storage_path);
-        const img = document.createElement("img");
-        img.src = data.publicUrl;
-        img.alt = "";
-        memoryBox.appendChild(img);
-      }
-      let n=0;
-      const imgs=[...memoryBox.querySelectorAll("img")];
-      imgs[0].classList.add("shown");
-      if (imgs.length>1) setInterval(()=>{
-        imgs[n].classList.remove("shown");
-        n=(n+1)%imgs.length;
-        imgs[n].classList.add("shown");
-      },3000);
-    } else {
-      memoryBox.innerHTML = '<div class="big">❤️</div>';
+    musicToggle
+      .classList
+      .add("playing");
+
+    musicHint
+      .classList
+      .add("hide");
+
+  }
+
+  catch (error) {
+
+    console.log(
+      "Music waiting for user interaction."
+    );
+
+  }
+
+}
+
+
+
+function stopMusic() {
+
+  music.pause();
+
+  musicPlaying = false;
+
+  musicToggle
+    .classList
+    .remove("playing");
+
+}
+
+
+
+musicToggle.onclick =
+  async () => {
+
+    if (musicPlaying) {
+
+      stopMusic();
+
     }
 
-    initInteractions(story.love_name);
-  } catch (e) {
-    console.error(e);
-    showError("This story could not be loaded. Check the link or database settings.");
-  }
-}
+    else {
 
-function initInteractions(loveName) {
-  const scenes=[...document.querySelectorAll(".scene")];
-  let i=0;
-  document.querySelectorAll(".next").forEach(b=>b.onclick=()=>{
-    if(i<scenes.length-1){scenes[i].classList.remove("active");i++;scenes[i].classList.add("active");}
-  });
+      await startMusic();
 
-  document.getElementById("openLetter").onclick=()=>{
-    document.getElementById("mainMessage").classList.remove("hidden");
-    document.getElementById("openLetter").classList.add("hidden");
-    document.getElementById("letterNext").classList.remove("hidden");
+    }
+
   };
 
-  document.querySelectorAll(".flowers button").forEach(b=>b.onclick=()=>{
-    if(b.classList.contains("target")){
-      document.getElementById("gameResult").textContent=`❤️ You found it! This heart belongs to ${loveName}.`;
-      document.getElementById("gameNext").classList.remove("hidden");
+
+
+/* ========================= */
+/* LOAD STORY */
+/* ========================= */
+
+async function loadStory() {
+
+  if (
+    !id ||
+    id === "story.html"
+  ) {
+
+    showError(
+      "This love story link is incomplete."
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    const {
+      data: story,
+      error
+    } =
+      await db
+        .from("love_stories")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+
+    if (error)
+      throw error;
+
+
+
+    /* Names */
+
+    setText(
+      "yourName",
+      story.your_name
+    );
+
+
+    setText(
+      "loveName",
+      story.love_name
+    );
+
+
+
+    /* Messages */
+
+    setText(
+      "mainMessage",
+      story.main_message
+    );
+
+
+    setText(
+      "r1",
+      story.reason1
+    );
+
+
+    setText(
+      "r2",
+      story.reason2
+    );
+
+
+    setText(
+      "r3",
+      story.reason3
+    );
+
+
+    setText(
+      "finalMessage",
+      story.final_message
+    );
+
+
+
+    /* Signature */
+
+    setText(
+      "signName",
+      story.your_name
+    );
+
+
+    setText(
+      "signLove",
+      story.love_name
+    );
+
+
+
+    /* Date */
+
+    const start =
+      new Date(
+        story.start_date +
+        "T00:00:00"
+      );
+
+
+    setText(
+      "dateText",
+
+      start.toLocaleDateString(
+        undefined,
+        {
+          day: "numeric",
+          month: "long",
+          year: "numeric"
+        }
+      )
+
+    );
+
+
+
+    /* Days counter */
+
+    function updateCounter() {
+
+      const days =
+        Math.max(
+          0,
+
+          Math.floor(
+
+            (
+              Date.now() -
+              start.getTime()
+            )
+            /
+            86400000
+
+          )
+
+        );
+
+
+      setText(
+        "counter",
+
+        `${days.toLocaleString()} Days Together ♥`
+
+      );
+
+    }
+
+
+    updateCounter();
+
+
+    setInterval(
+      updateCounter,
+      60000
+    );
+
+
+
+    /* ========================= */
+    /* PHOTOS */
+    /* ========================= */
+
+    const {
+      data: photos,
+      error: photoError
+    } =
+      await db
+        .from("love_photos")
+        .select(
+          "storage_path,sort_order"
+        )
+        .eq(
+          "story_id",
+          id
+        )
+        .order(
+          "sort_order"
+        );
+
+
+    if (photoError)
+      throw photoError;
+
+
+
+    const memoryBox =
+      document.getElementById(
+        "memories"
+      );
+
+
+
+    if (
+      photos &&
+      photos.length
+    ) {
+
+      photos.forEach(
+        (photo) => {
+
+          const {
+            data
+          } =
+            db
+              .storage
+              .from(
+                window.SUPABASE_BUCKET
+              )
+              .getPublicUrl(
+                photo.storage_path
+              );
+
+
+          const img =
+            document.createElement(
+              "img"
+            );
+
+
+          img.src =
+            data.publicUrl;
+
+
+          img.alt =
+            "Memory";
+
+
+          memoryBox.appendChild(
+            img
+          );
+
+        }
+      );
+
+
+    }
+
+    else {
+
+      memoryBox.innerHTML = `
+
+        <div class="empty-memory">
+
+          ♥
+          <br>
+
+          <span>
+            No memories added yet.
+          </span>
+
+        </div>
+
+      `;
+
+    }
+
+
+
+    /* Start interactions */
+
+    initInteractions(
+      story.love_name
+    );
+
+
+  }
+
+  catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    showError(
+      "This story could not be loaded. Check the link or database settings."
+    );
+
+  }
+
+}
+
+
+
+/* ========================= */
+/* INTERACTIONS */
+/* ========================= */
+
+function initInteractions(
+  loveName
+) {
+
+  const scenes =
+    [
+      ...
+      document.querySelectorAll(
+        ".scene"
+      )
+    ];
+
+
+  let currentScene = 0;
+
+
+
+  function goNext() {
+
+    if (
+      currentScene <
+      scenes.length - 1
+    ) {
+
+      scenes[
+        currentScene
+      ]
+        .classList
+        .remove("active");
+
+
+      currentScene++;
+
+
+      scenes[
+        currentScene
+      ]
+        .classList
+        .add("active");
+
+
       burst();
-    } else document.getElementById("gameResult").textContent="Not this one... try again 🌸";
-  });
 
-  document.getElementById("touchRose").onclick=()=>{
-    document.getElementById("roseMessage").textContent=`${loveName}, you are very special. ❤️`;
-    document.getElementById("roseMessage").classList.remove("hidden");
-    document.getElementById("touchRose").classList.add("hidden");
-    document.getElementById("roseNext").classList.remove("hidden");
-    burst();
-  };
-  setInterval(burst,4500);
-}
-function burst(){
-  for(let i=0;i<8;i++){
-    const h=document.createElement("span");
-    h.className="heart";h.textContent=["❤️","💕","✨"][Math.floor(Math.random()*3)];
-    h.style.left=Math.random()*100+"%";
-    h.style.fontSize=(14+Math.random()*18)+"px";
-    document.getElementById("hearts").appendChild(h);
-    setTimeout(()=>h.remove(),5000);
+    }
+
   }
+
+
+
+  /* Next buttons */
+
+  document
+    .querySelectorAll(
+      ".next"
+    )
+    .forEach(
+      button => {
+
+        button.onclick =
+          async () => {
+
+            /*
+             Start music when
+             visitor begins story.
+            */
+
+            if (
+              button.id ===
+              "beginBtn"
+            ) {
+
+              await startMusic();
+
+            }
+
+
+            goNext();
+
+          };
+
+      }
+    );
+
+
+
+  /* Letter */
+
+  document
+    .getElementById(
+      "openLetter"
+    )
+    .onclick =
+      async () => {
+
+        document
+          .getElementById(
+            "mainMessage"
+          )
+          .classList
+          .remove(
+            "hidden"
+          );
+
+
+        document
+          .getElementById(
+            "openLetter"
+          )
+          .classList
+          .add(
+            "hidden"
+          );
+
+
+        document
+          .getElementById(
+            "letterNext"
+          )
+          .classList
+          .remove(
+            "hidden"
+          );
+
+
+        if (
+          !musicPlaying
+        ) {
+
+          await startMusic();
+
+        }
+
+
+        burst();
+
+      };
+
+
+
+  /* Hidden heart */
+
+  document
+    .querySelectorAll(
+      ".flowers button"
+    )
+    .forEach(
+      button => {
+
+        button.onclick =
+          () => {
+
+            if (
+              button
+                .classList
+                .contains(
+                  "target"
+                )
+            {
+
+              document
+                .getElementById(
+                  "gameResult"
+                )
+                .textContent =
+
+                `♥ This heart belongs to ${loveName}. ${loveName}, you are loved.`;
+
+
+
+              document
+                .getElementById(
+                  "gameNext"
+                )
+                .classList
+                .remove(
+                  "hidden"
+                );
+
+
+              burst();
+
+            }
+
+            else {
+
+              document
+                .getElementById(
+                  "gameResult"
+                )
+                .textContent =
+                "Not this one... try again 🌸";
+
+            }
+
+          };
+
+      }
+    );
+
+
+
+  /* Rose */
+
+  document
+    .getElementById(
+      "touchRose"
+    )
+    .onclick =
+      () => {
+
+        document
+          .getElementById(
+            "roseMessage"
+          )
+          .textContent =
+
+          `${loveName}, you are very special. ❤️`;
+
+
+        document
+          .getElementById(
+            "roseMessage"
+          )
+          .classList
+          .remove(
+            "hidden"
+          );
+
+
+        document
+          .getElementById(
+            "touchRose"
+          )
+          .classList
+          .add(
+            "hidden"
+          );
+
+
+        document
+          .getElementById(
+            "roseNext"
+          )
+          .classList
+          .remove(
+            "hidden"
+          );
+
+
+        burst();
+
+      };
+
+
+
+  /* ========================= */
+  /* COLLAGE THEMES */
+  /* ========================= */
+
+  document
+    .querySelectorAll(
+      ".theme-btn"
+    )
+    .forEach(
+      button => {
+
+        button.onclick =
+          () => {
+
+            document
+              .querySelectorAll(
+                ".theme-btn"
+              )
+              .forEach(
+                btn =>
+                  btn
+                    .classList
+                    .remove(
+                      "active"
+                    )
+              );
+
+
+            button
+              .classList
+              .add(
+                "active"
+              );
+
+
+            const collage =
+              document.getElementById(
+                "memories"
+              );
+
+
+            collage.className =
+              "collage " +
+              button.dataset.theme;
+
+          };
+
+      }
+    );
+
+
+
+  /* Replay */
+
+  document
+    .getElementById(
+      "replayBtn"
+    )
+    .onclick =
+      () => {
+
+        stopMusic();
+
+        location.reload();
+
+      };
+
+
+
+  /* Floating hearts */
+
+  setInterval(
+    burst,
+    5000
+  );
+
 }
+
+
+
+/* ========================= */
+/* FLOATING HEARTS */
+/* ========================= */
+
+function burst() {
+
+  for (
+    let i = 0;
+    i < 7;
+    i++
+  ) {
+
+    const heart =
+      document.createElement(
+        "span"
+      );
+
+
+    heart.className =
+      "heart";
+
+
+    heart.textContent =
+      [
+        "♥",
+        "💕",
+        "✨",
+        "♡"
+      ][
+        Math.floor(
+          Math.random() * 4
+        )
+      ];
+
+
+    heart.style.left =
+      Math.random() * 100 +
+      "%";
+
+
+    heart.style.fontSize =
+      (
+        14 +
+        Math.random() * 18
+      ) +
+      "px";
+
+
+    document
+      .getElementById(
+        "hearts"
+      )
+      .appendChild(
+        heart
+      );
+
+
+    setTimeout(
+      () => heart.remove(),
+      5000
+    );
+
+  }
+
+}
+
+
+
 loadStory();
