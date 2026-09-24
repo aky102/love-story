@@ -1,141 +1,1020 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+
   <title>Create Our Love Story ❤️</title>
-  <link rel="stylesheet" href="/style.css">
+
+
+  <!-- =========================
+       EMBEDDED CSS
+       ========================= -->
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+
+    body {
+      margin: 0;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      color: #fff;
+
+      background: #16070f;
+    }
+
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+
+    button {
+      cursor: pointer;
+    }
+
+
+    /* =========================
+       CREATOR PAGE
+       ========================= */
+
+    .creator-page {
+
+      min-height: 100vh;
+
+      display: grid;
+
+      place-items: center;
+
+      padding: 20px;
+
+      background:
+
+        radial-gradient(
+          circle at 50% 0%,
+          #9b315f 0%,
+          #501632 28%,
+          #210b18 60%,
+          #0d050a 100%
+        );
+
+      overflow-x: hidden;
+
+    }
+
+
+    .creator-page::before {
+
+      content: "";
+
+      position: fixed;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      opacity: .25;
+
+      background:
+
+        radial-gradient(
+          circle at 20% 25%,
+          #ffd7e6 0 1px,
+          transparent 2px
+        ),
+
+        radial-gradient(
+          circle at 80% 70%,
+          #ffd7e6 0 1px,
+          transparent 2px
+        );
+
+      background-size:
+        90px 90px,
+        120px 120px;
+
+    }
+
+
+    .creator-card {
+
+      position: relative;
+
+      z-index: 2;
+
+      width:
+        min(620px, 100%);
+
+      padding: 34px;
+
+      border-radius: 30px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #ffffff13,
+          #ffffff06
+        );
+
+      border:
+        1px solid #ffffff25;
+
+      backdrop-filter:
+        blur(18px);
+
+      box-shadow:
+        0 30px 80px #0008;
+
+      animation:
+        cardIn .8s ease;
+
+    }
+
+
+    .sparkle {
+
+      text-align: center;
+
+      font-size: 30px;
+
+      color: #ffd0e1;
+
+      animation:
+        sparkle 2s infinite;
+
+    }
+
+
+    .creator-card h1 {
+
+      text-align: center;
+
+      font-size:
+        clamp(
+          38px,
+          8vw,
+          58px
+        );
+
+      margin:
+        5px 0 10px;
+
+      font-weight:
+        normal;
+
+      color:
+        #fff4f8;
+
+      text-shadow:
+        0 5px 30px #ff4e9655;
+
+    }
+
+
+    .creator-card > p {
+
+      text-align: center;
+
+      color:
+        #eac5d5;
+
+      line-height:
+        1.6;
+
+      margin-bottom:
+        28px;
+
+    }
+
+
+    /* =========================
+       FORM
+       ========================= */
+
+    .creator-card label {
+
+      display: block;
+
+      margin:
+        17px 0 7px;
+
+      color:
+        #ffd8e6;
+
+      font-size:
+        15px;
+
+    }
+
+
+    .creator-card input,
+    .creator-card textarea {
+
+      width: 100%;
+
+      padding:
+        14px 15px;
+
+      border-radius:
+        14px;
+
+      border:
+        1px solid #ffffff25;
+
+      background:
+        #00000035;
+
+      color:
+        #fff;
+
+      outline:
+        none;
+
+      transition:
+        .25s;
+
+    }
+
+
+    .creator-card input::placeholder,
+    .creator-card textarea::placeholder {
+
+      color:
+        #d6aabd;
+
+    }
+
+
+    .creator-card input:focus,
+    .creator-card textarea:focus {
+
+      border-color:
+        #ff80b0;
+
+      box-shadow:
+        0 0 0 3px #ff5f9e18;
+
+      background:
+        #00000050;
+
+    }
+
+
+    .creator-card textarea {
+
+      min-height:
+        110px;
+
+      resize:
+        vertical;
+
+      line-height:
+        1.6;
+
+    }
+
+
+    /* =========================
+       PHOTO INPUT
+       ========================= */
+
+    .creator-card input[type="file"] {
+
+      padding:
+        12px;
+
+      cursor:
+        pointer;
+
+    }
+
+
+    .creator-card input[type="file"]::file-selector-button {
+
+      border:
+        none;
+
+      padding:
+        9px 14px;
+
+      border-radius:
+        999px;
+
+      margin-right:
+        10px;
+
+      background:
+        #ff649f;
+
+      color:
+        #fff;
+
+      cursor:
+        pointer;
+
+    }
+
+
+    .small {
+
+      font-size:
+        12px !important;
+
+      color:
+        #bd94a7 !important;
+
+      text-align:
+        left !important;
+
+      margin:
+        8px 0 !important;
+
+    }
+
+
+    /* =========================
+       BUTTONS
+       ========================= */
+
+    .primary,
+    .secondary {
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      border-radius:
+        999px;
+
+      padding:
+        14px 24px;
+
+      margin-top:
+        20px;
+
+      text-decoration:
+        none;
+
+      transition:
+        transform .25s,
+        box-shadow .25s;
+
+      cursor:
+        pointer;
+
+    }
+
+
+    .primary {
+
+      border:
+        1px solid transparent;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ff72a8,
+          #d83d7c
+        );
+
+      color:
+        #fff;
+
+      box-shadow:
+        0 12px 35px #e64c8c45;
+
+    }
+
+
+    .primary:hover {
+
+      transform:
+        translateY(-3px);
+
+      box-shadow:
+        0 15px 40px #e64c8c66;
+
+    }
+
+
+    .secondary {
+
+      border:
+        1px solid #ffffff30;
+
+      background:
+        #ffffff12;
+
+      color:
+        #fff;
+
+    }
+
+
+    .secondary:hover {
+
+      transform:
+        translateY(-3px);
+
+    }
+
+
+    .creator-card .primary {
+
+      width:
+        100%;
+
+      font-size:
+        16px;
+
+    }
+
+
+    /* =========================
+       STATUS
+       ========================= */
+
+    #status {
+
+      text-align:
+        center;
+
+      margin-top:
+        18px;
+
+      color:
+        #ffd1e1;
+
+      line-height:
+        1.5;
+
+      min-height:
+        22px;
+
+    }
+
+
+    /* =========================
+       RESULT
+       ========================= */
+
+    .result {
+
+      margin-top:
+        25px;
+
+      padding:
+        22px;
+
+      border-radius:
+        22px;
+
+      background:
+        #ffffff0d;
+
+      border:
+        1px solid #ffffff20;
+
+      text-align:
+        center;
+
+      animation:
+        fadeIn .6s ease;
+
+    }
+
+
+    .result p {
+
+      margin-top:
+        0;
+
+      color:
+        #ffd9e7;
+
+    }
+
+
+    .result input {
+
+      margin-top:
+        5px;
+
+    }
+
+
+    .result .primary {
+
+      width:
+        100%;
+
+    }
+
+
+    .result .secondary {
+
+      width:
+        100%;
+
+      margin-left:
+        0;
+
+    }
+
+
+    .hidden {
+
+      display:
+        none !important;
+
+    }
+
+
+    /* =========================
+       HEART DECORATION
+       ========================= */
+
+    .creator-card::after {
+
+      content:
+        "♥";
+
+      position:
+        absolute;
+
+      right:
+        -15px;
+
+      top:
+        -20px;
+
+      font-size:
+        55px;
+
+      color:
+        #ff76aa;
+
+      opacity:
+        .35;
+
+      animation:
+        floatHeart 3s ease-in-out infinite;
+
+    }
+
+
+    /* =========================
+       ANIMATIONS
+       ========================= */
+
+    @keyframes cardIn {
+
+      from {
+
+        opacity:
+          0;
+
+        transform:
+          translateY(30px)
+          scale(.97);
+
+      }
+
+      to {
+
+        opacity:
+          1;
+
+        transform:
+          none;
+
+      }
+
+    }
+
+
+    @keyframes fadeIn {
+
+      from {
+
+        opacity:
+          0;
+
+        transform:
+          translateY(10px);
+
+      }
+
+      to {
+
+        opacity:
+          1;
+
+        transform:
+          none;
+
+      }
+
+    }
+
+
+    @keyframes sparkle {
+
+      0%,
+      100% {
+
+        transform:
+          scale(1);
+
+        opacity:
+          .7;
+
+      }
+
+      50% {
+
+        transform:
+          scale(1.2);
+
+        opacity:
+          1;
+
+      }
+
+    }
+
+
+    @keyframes floatHeart {
+
+      0%,
+      100% {
+
+        transform:
+          translateY(0)
+          rotate(-8deg);
+
+      }
+
+      50% {
+
+        transform:
+          translateY(-12px)
+          rotate(8deg);
+
+      }
+
+    }
+
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 600px) {
+
+      .creator-page {
+
+        padding:
+          12px;
+
+      }
+
+
+      .creator-card {
+
+        padding:
+          24px 19px;
+
+        border-radius:
+          24px;
+
+      }
+
+
+      .creator-card h1 {
+
+        font-size:
+          38px;
+
+      }
+
+
+      .creator-card label {
+
+        margin-top:
+          15px;
+
+      }
+
+
+      .creator-card input,
+      .creator-card textarea {
+
+        font-size:
+          16px;
+
+      }
+
+
+      .creator-card::after {
+
+        right:
+          -5px;
+
+        top:
+          -15px;
+
+        font-size:
+          42px;
+
+      }
+
+    }
+
+  </style>
+
 </head>
+
 
 <body class="creator-page">
 
-<main class="creator-card">
 
-  <div class="sparkle">✦</div>
+  <!-- =========================
+       MAIN CREATOR CARD
+       ========================= -->
 
-  <h1>Our Love Story ❤️</h1>
-  <p>Create a little romantic journey and get a shareable link.</p>
+  <main class="creator-card">
 
-  <form id="loveForm">
 
-    <label>Your name</label>
-    <input
-      id="yourName"
-      required
-      maxlength="40"
-      placeholder="Your name"
-    >
+    <div class="sparkle">
+      ✦
+    </div>
 
-    <label>Your love's name</label>
-    <input
-      id="loveName"
-      required
-      maxlength="40"
-      placeholder="Their name"
-    >
 
-    <label>Our story started on</label>
-    <input
-      id="startDate"
-      type="date"
-      required
-    >
+    <h1>
+      Our Love Story ❤️
+    </h1>
 
-    <label>Your love message</label>
-    <textarea
-      id="mainMessage"
-      required
-      maxlength="1200"
-      placeholder="Write from your heart..."
-    ></textarea>
 
-    <label>Reason 1</label>
-    <input
-      id="reason1"
-      required
-      maxlength="180"
-      placeholder="Your smile..."
-    >
-
-    <label>Reason 2</label>
-    <input
-      id="reason2"
-      maxlength="180"
-      placeholder="The way you care..."
-    >
-
-    <label>Reason 3</label>
-    <input
-      id="reason3"
-      maxlength="180"
-      placeholder="Simply you..."
-    >
-
-    <label>Final message</label>
-    <textarea
-      id="finalMessage"
-      required
-      maxlength="1000"
-      placeholder="Your final surprise message..."
-    ></textarea>
-
-    <label>Memories ❤️</label>
-
-    <input
-      id="photos"
-      type="file"
-      accept="image/jpeg,image/png,image/webp,image/gif"
-      multiple
-    >
-
-    <p class="small">
-      Select several photos. They will appear as a simple photo-only memory section.
+    <p>
+      Create a little romantic journey
+      and give someone a memory
+      they can keep forever.
     </p>
 
-    <button
-      class="primary"
-      type="submit"
-      id="createBtn"
+
+    <!-- =========================
+         FORM
+         ========================= -->
+
+    <form id="loveForm">
+
+
+      <!-- YOUR NAME -->
+
+      <label for="yourName">
+        Your name
+      </label>
+
+      <input
+        id="yourName"
+        type="text"
+        required
+        maxlength="40"
+        autocomplete="name"
+        placeholder="Your name"
+      >
+
+
+      <!-- LOVE NAME -->
+
+      <label for="loveName">
+        Your love's name
+      </label>
+
+      <input
+        id="loveName"
+        type="text"
+        required
+        maxlength="40"
+        placeholder="Their name"
+      >
+
+
+      <!-- START DATE -->
+
+      <label for="startDate">
+        Our story started on
+      </label>
+
+      <input
+        id="startDate"
+        type="date"
+        required
+      >
+
+
+      <!-- MAIN MESSAGE -->
+
+      <label for="mainMessage">
+        Your love message
+      </label>
+
+      <textarea
+        id="mainMessage"
+        required
+        maxlength="1200"
+        placeholder="Write something from your heart..."
+      ></textarea>
+
+
+      <!-- REASON 1 -->
+
+      <label for="reason1">
+        Reason 1
+      </label>
+
+      <input
+        id="reason1"
+        type="text"
+        required
+        maxlength="180"
+        placeholder="Your smile..."
+      >
+
+
+      <!-- REASON 2 -->
+
+      <label for="reason2">
+        Reason 2
+      </label>
+
+      <input
+        id="reason2"
+        type="text"
+        maxlength="180"
+        placeholder="The way you care..."
+      >
+
+
+      <!-- REASON 3 -->
+
+      <label for="reason3">
+        Reason 3
+      </label>
+
+      <input
+        id="reason3"
+        type="text"
+        maxlength="180"
+        placeholder="Simply you..."
+      >
+
+
+      <!-- FINAL MESSAGE -->
+
+      <label for="finalMessage">
+        Final message
+      </label>
+
+      <textarea
+        id="finalMessage"
+        required
+        maxlength="1000"
+        placeholder="Write your final surprise message..."
+      ></textarea>
+
+
+      <!-- PHOTOS -->
+
+      <label for="photos">
+        Memories ❤️
+      </label>
+
+      <input
+        id="photos"
+        type="file"
+        accept="image/jpeg,image/png,image/webp,image/gif"
+        multiple
+      >
+
+      <p class="small">
+        Select your favorite photos.
+        They will appear together as a romantic collage.
+      </p>
+
+
+      <!-- CREATE -->
+
+      <button
+        class="primary"
+        type="submit"
+        id="createBtn"
+      >
+
+        Create My Love Link ❤️
+
+      </button>
+
+
+    </form>
+
+
+    <!-- =========================
+         STATUS
+         ========================= -->
+
+    <div id="status"></div>
+
+
+    <!-- =========================
+         RESULT
+         ========================= -->
+
+    <div
+      id="result"
+      class="result hidden"
     >
-      Create My Love Link ❤️
-    </button>
 
-  </form>
+      <p>
+        Your love story is ready ❤️
+      </p>
 
-  <div id="status"></div>
 
-  <div id="result" class="result hidden">
+      <input
+        id="shareLink"
+        type="text"
+        readonly
+      >
 
-    <p>Your love story is ready ❤️</p>
 
-    <input
-      id="shareLink"
-      readonly
-    >
+      <button
+        class="primary"
+        id="copyBtn"
+      >
+        Copy Love Link 🔗
+      </button>
 
-    <button
-      class="primary"
-      id="copyBtn"
-    >
-      Copy Link 🔗
-    </button>
 
-    <a
-      id="openLink"
-      class="secondary"
-      target="_blank"
-      rel="noopener"
-    >
-      Open Story
-    </a>
+      <a
+        id="openLink"
+        class="secondary"
+        target="_blank"
+        rel="noopener"
+      >
+        Open Story ❤️
+      </a>
 
-  </div>
+    </div>
 
-</main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/config.js"></script>
-<script src="/creator.js"></script>
+  </main>
+
+
+
+  <!-- =========================
+       SUPABASE
+       ========================= -->
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+
+  <!-- IMPORTANT:
+       Keep these ROOT paths -->
+
+  <script src="/config.js"></script>
+
+  <script src="/creator.js"></script>
+
 
 </body>
+
 </html>
